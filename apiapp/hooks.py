@@ -122,13 +122,45 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+        "Customer": {
+        "after_insert": "apiapp.custom_methods.post_customer_to_external_api",
+        "on_update": "apiapp.custom_methods.update_customer_status_and_fetch_data"
+        },
+        "Hub": {
+        "after_insert": "apiapp.custom_methods.post_hub_to_external_api",
+        "on_update": "apiapp.custom_methods.update_hub_status_and_fetch_data"
+        },
+	"Post Office": {
+        "after_insert": "apiapp.custom_methods.post_postoffice_to_external_api",
+        "on_update": "apiapp.custom_methods.update_postoffice_status_and_fetch_data"
+        },
+	"Driver": {
+        "after_insert": "apiapp.custom_methods.post_driver_to_external_api",
+        "on_update": "apiapp.custom_methods.update_driver_status_and_fetch_data"
+        },
+	"Service Request": {
+        "after_insert": "apiapp.custom_methods.post_service_request_to_external_api",
+        "on_update": "apiapp.custom_methods.update_service_request_status_and_fetch_data"
+        },
+        "Vehicle": {
+        "after_insert": "apiapp.custom_methods.post_vehicle_to_external_api",
+        "on_update": "apiapp.custom_methods.update_vehicle_status_and_fetch_data"
+        },
+        "Vehicle Assignment": {
+        "after_insert": "apiapp.custom_methods.post_vehiclea_to_external_api",
+        "on_update": "apiapp.custom_methods.update_vehiclea_status_and_fetch_data"
+        }
+        # "Shipment Delivery": {
+        # "before_save": "apiapp.custom_methods.send_data_to_optimize_routechild1"
+        # # "on_update": "apiapp.esri.send_data_to_optimize_route"
+        # }
+	# "*": {
+	# 	"on_update": "method",
+	# 	"on_cancel": "method",
+	# 	"on_trash": "method"
+	# }
+}
 
 # Scheduled Tasks
 # ---------------

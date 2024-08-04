@@ -1,0 +1,420 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2024-03-29 15:28:34.222788",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_91dn",
+  "amended_from",
+  "naming_series",
+  "customer",
+  "received_at",
+  "post_office",
+  "hub",
+  "service_partner",
+  "column_break_pjdd",
+  "status",
+  "delivered_time",
+  "pickup_type",
+  "post_officehub",
+  "request_date",
+  "section_break_vqvp",
+  "table_lepd",
+  "section_break_hvfe",
+  "shipment_type",
+  "column_break_wyap",
+  "service_type",
+  "column_break_eprr",
+  "is_paid",
+  "mode_of_payment",
+  "section_break_hfno",
+  "address",
+  "contact",
+  "mobile_no",
+  "document_barcode",
+  "column_break_eczn",
+  "postal_code",
+  "flat_no_building_name",
+  "city_town",
+  "landmark",
+  "contact_1",
+  "contact_person_number",
+  "section_break_u00y",
+  "pick_date",
+  "pickup_time",
+  "from_time",
+  "to_time",
+  "section_break_omhf",
+  "pickup_longitude",
+  "pickup_latitude",
+  "source_map",
+  "column_break_uusf",
+  "destination_longitude",
+  "destination_latitude",
+  "destination_map",
+  "section_break_lufx",
+  "assigned_to_driver",
+  "column_break_egry",
+  "assigned_to_vehicle",
+  "section_break_mwci",
+  "special_instructions",
+  "section_break_neot",
+  "shipment_history",
+  "blockchain_validation_tab",
+  "validation"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_91dn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Request",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": ".YY.MM.DD.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": ".YY.MM.DD.-.#####"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "received_at",
+   "fieldtype": "Select",
+   "label": "Received at",
+   "options": "\nPost Office\nHub\nService Partner"
+  },
+  {
+   "depends_on": "eval:doc.received_at==\"Post Office\"",
+   "fieldname": "post_office",
+   "fieldtype": "Link",
+   "label": "Post Office",
+   "options": "Post Office"
+  },
+  {
+   "depends_on": "eval:doc.received_at==\"Hub\"",
+   "fieldname": "hub",
+   "fieldtype": "Link",
+   "label": "Hub",
+   "options": "Hub"
+  },
+  {
+   "depends_on": "eval:doc.received_at==\"Service Partner\"",
+   "fieldname": "service_partner",
+   "fieldtype": "Link",
+   "label": "Service Partner",
+   "options": "Service Partner"
+  },
+  {
+   "fieldname": "column_break_pjdd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Request Received\nUnder Process\nAt Hub\nOut for Delivery\nDelivered"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Delivered\"",
+   "fieldname": "delivered_time",
+   "fieldtype": "Datetime",
+   "label": "Delivered Time"
+  },
+  {
+   "fieldname": "pickup_type",
+   "fieldtype": "Select",
+   "label": "Pickup Type",
+   "options": "Walk-In\nPickup"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Walk-In\"",
+   "fieldname": "post_officehub",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Post Office/Hub",
+   "options": "Address"
+  },
+  {
+   "default": "Today",
+   "fieldname": "request_date",
+   "fieldtype": "Datetime",
+   "label": "Request Date"
+  },
+  {
+   "fieldname": "section_break_vqvp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_lepd",
+   "fieldtype": "Table",
+   "label": "Select Services",
+   "options": "SR Items"
+  },
+  {
+   "fieldname": "section_break_hvfe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shipment_type",
+   "fieldtype": "Select",
+   "label": "Shipment Type",
+   "options": "\nDocuments"
+  },
+  {
+   "fieldname": "column_break_wyap",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Select",
+   "label": "Service Type",
+   "options": "\nExpress\nNext Day\nRegular"
+  },
+  {
+   "fieldname": "column_break_eprr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_paid",
+   "fieldtype": "Select",
+   "label": "Is PAID?",
+   "options": "\nYes\nNo"
+  },
+  {
+   "depends_on": "eval:doc.is_paid==\"Yes\"",
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Select",
+   "label": "Mode of Payment",
+   "options": "\nCash\nCard"
+  },
+  {
+   "fieldname": "section_break_hfno",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fetch_from": "customer.primary_address",
+   "fetch_if_empty": 1,
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address",
+   "options": "Address"
+  },
+  {
+   "fetch_from": "customer.customer_primary_contact",
+   "fetch_if_empty": 1,
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Contact",
+   "options": "Contact"
+  },
+  {
+   "fetch_from": "customer.mobile_no",
+   "fetch_if_empty": 1,
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No"
+  },
+  {
+   "fieldname": "document_barcode",
+   "fieldtype": "Barcode",
+   "label": "Document Barcode"
+  },
+  {
+   "fieldname": "column_break_eczn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Link",
+   "label": "Postal Code",
+   "options": "Postal Code"
+  },
+  {
+   "fieldname": "flat_no_building_name",
+   "fieldtype": "Data",
+   "label": "Flat No, Building Name"
+  },
+  {
+   "fieldname": "city_town",
+   "fieldtype": "Data",
+   "label": "City/ Town"
+  },
+  {
+   "fieldname": "landmark",
+   "fieldtype": "Data",
+   "label": "Landmark"
+  },
+  {
+   "fieldname": "contact_1",
+   "fieldtype": "Data",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "contact_person_number",
+   "fieldtype": "Data",
+   "label": "Contact Person Number"
+  },
+  {
+   "fieldname": "section_break_u00y",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "pick_date",
+   "fieldtype": "Date",
+   "label": "Pick Date"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "pickup_time",
+   "fieldtype": "Heading",
+   "label": "Pickup Time"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To Time"
+  },
+  {
+   "fieldname": "section_break_omhf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "pickup_longitude",
+   "fieldtype": "Data",
+   "label": "Longitude"
+  },
+  {
+   "depends_on": "eval:doc.pickup_type==\"Pickup\"",
+   "fieldname": "pickup_latitude",
+   "fieldtype": "Data",
+   "label": "Latitude"
+  },
+  {
+   "fieldname": "source_map",
+   "fieldtype": "HTML",
+   "label": "Source Map"
+  },
+  {
+   "fieldname": "column_break_uusf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "postal_code.longitude",
+   "fieldname": "destination_longitude",
+   "fieldtype": "Data",
+   "label": "Longitude"
+  },
+  {
+   "fetch_from": "postal_code.latitude",
+   "fieldname": "destination_latitude",
+   "fieldtype": "Data",
+   "label": "Latitude"
+  },
+  {
+   "fieldname": "destination_map",
+   "fieldtype": "HTML",
+   "label": "Destination Map"
+  },
+  {
+   "fieldname": "section_break_lufx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "assigned_to_driver",
+   "fieldtype": "Link",
+   "label": "Assigned to Driver",
+   "options": "Driver"
+  },
+  {
+   "fieldname": "column_break_egry",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assigned_to_vehicle",
+   "fieldtype": "Link",
+   "label": "Assigned to Vehicle",
+   "options": "Vehicle"
+  },
+  {
+   "fieldname": "section_break_mwci",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "special_instructions",
+   "fieldtype": "Text Editor",
+   "label": "Special Instructions"
+  },
+  {
+   "fieldname": "section_break_neot",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shipment_history",
+   "fieldtype": "Table",
+   "label": "Shipment History",
+   "options": "Shipment History"
+  },
+  {
+   "fieldname": "blockchain_validation_tab",
+   "fieldtype": "Tab Break",
+   "label": "BlockChain Validation"
+  },
+  {
+   "fieldname": "validation",
+   "fieldtype": "Long Text",
+   "label": "Validation"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-23 08:26:30.750778",
+ "modified_by": "Administrator",
+ "module": "API APP",
+ "name": "Service Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
