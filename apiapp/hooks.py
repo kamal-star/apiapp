@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/apiapp/css/apiapp.css"
-# app_include_js = "/assets/apiapp/js/apiapp.js"
+# app_include_js = "/assets/apiapp/js/desk.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/apiapp/css/apiapp.css"
@@ -125,7 +125,8 @@ app_license = "mit"
 doc_events = {
         "Customer": {
         "after_insert": "apiapp.custom_methods.post_customer_to_external_api",
-        "on_update": "apiapp.custom_methods.update_customer_status_and_fetch_data"
+        "on_update": "apiapp.custom_methods.update_customer_status_and_fetch_data",
+        "before_save":"apiapp.custom_methods.send_sms_customer"
         },
         "Hub": {
         "after_insert": "apiapp.custom_methods.post_hub_to_external_api",
@@ -141,6 +142,7 @@ doc_events = {
         },
 	"Service Request": {
         "after_insert": "apiapp.custom_methods.post_service_request_to_external_api",
+        # "before_save": "apiapp.custom_methods.notify_issue_creation",
         "on_update": "apiapp.custom_methods.update_service_request_status_and_fetch_data"
         },
         "Vehicle": {
@@ -150,6 +152,12 @@ doc_events = {
         "Vehicle Assignment": {
         "after_insert": "apiapp.custom_methods.post_vehiclea_to_external_api",
         "on_update": "apiapp.custom_methods.update_vehiclea_status_and_fetch_data"
+        },
+        "Notification Log":{
+        "after_insert": "apiapp.custom_methods.notify_issue_creation"
+        },
+        "Address":{
+        "before_save":"apiapp.decrypt.shortloc"
         }
         # "Shipment Delivery": {
         # "before_save": "apiapp.custom_methods.send_data_to_optimize_routechild1"

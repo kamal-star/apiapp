@@ -953,7 +953,7 @@ def get_item_code_by_barcode(barcode):
         # Query to fetch item details based on barcode
         item = frappe.get_all('Service Request', 
                               filters={'name': barcode}, 
-                              fields=['name', 'destination_latitude', 'destination_longitude','request_date'])
+                              fields=['name', 'destination_latitude', 'destination_longitude','request_date','custom_plot_number',"custom_neighborhood1","custom_areas"])
         if item:
             return item
         else:
@@ -1143,3 +1143,42 @@ def fetch_vehicle_assignment_data():
     
     except requests.RequestException as e:
         return f"An error occurred: {e}"
+
+
+@frappe.whitelist()
+def notify_issue_creation(doc, method):
+    # This function will be called when an Issue is created
+    message = f"{frappe.session.user} just created an {doc.subject}..."
+    # Publish the real-time message to the Administrator user
+    frappe.publish_realtime(event='msgprint', message=message, user=doc.for_user)
+
+
+@frappe.whitelist(allow_guest=True)
+def send_sms_customer(doc,method=None):
+    message = "Thank you for registering with Tasheel. Please download our app from the link below to manage your address."
+    if doc.custom_mobile:
+        url = "https://gateway.standingtech.com/api/v4/sms/send"
+        payload = {
+            "recipient": doc.custom_mobile,
+            "sender_id": "AtlasGisIT",
+            "type": "sms",
+            "message": message,
+            "lang": "en"
+        }
+        headers = {
+            'Accept': "application/json",
+            'Authorization': "Bearer 212|niaOrZ6mtE0eXio2lih4bFgxaE0T5Kmn9PqmoecD1f2332d9",
+            'Content-Type': "application/json"
+        }
+        
+       
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+            
+            
+        if response.status_code == 200:
+            response_data = response.json()
+            frappe.msgprint("Sucessfuly Sent")    
+        else:
+            frappe.log_error(f"Failed to send OTP. Status Code: {response.status_code}, Response: {response.text}")
+            frappe.msgprint("Sucessfuly Not Sent")
+
